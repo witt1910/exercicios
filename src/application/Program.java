@@ -2,43 +2,62 @@ package application;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Locale;
+import java.util.Scanner;
+
+import entities.Employee;
 
 public class Program {
 	public static void main(String[] args) {
 
-		// 05.05 List (criação e uso de alguns métodos)
+		// 05.06 List (exercicio)
 
-		List<String> list = new ArrayList<>();
-		
-		list.add("Maria");
-		list.add("Alex");
-		list.add("Bob");
-		list.add("Ana");
-		list.add(2, "Marco");
-		
-		System.out.println("Size: " + list.size());
-		for(String x : list) {
-			System.out.println(x);
+//		Fazer um programa para ler um número inteiro N e depois os dados (id, nome e salario) de
+//		N funcionários. Não deve haver repetição de id.
+//		Em seguida, efetuar o aumento de X por cento no salário de um determinado funcionário.
+//		Para isso, o programa deve ler um id e o valor X. Se o id informado não existir, mostrar uma
+//		mensagem e abortar a operação. Ao final, mostrar a listagem atualizada dos funcionários,
+//		conforme exemplos.
+//		Lembre-se de aplicar a técnica de encapsulamento para não permitir que o salário possa
+//		ser mudado livremente. Um salário só pode ser aumentado com base em uma operação de
+//		aumento por porcentagem dada.
+
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
+
+		List<Employee> list = new ArrayList<>();
+
+		System.out.print("How many employees will be registraded? ");
+		int numb = sc.nextInt();
+		System.out.println();
+		for (int count = 0; count < numb; count++) {
+			System.out.println("Employee #" + (count + 1) + ":");
+			System.out.print("Id: ");
+			int id = sc.nextInt();
+			System.out.print("Name: ");
+			sc.nextLine();
+			String name = sc.nextLine();
+			System.out.print("Salary: ");
+			double salary = sc.nextDouble();
+			list.add(new Employee(id, name, salary));
+			System.out.println();
 		}
-		System.out.println("------------------------");
-		list.removeIf(x -> x.charAt(0) == 'M');
-		for(String x : list) {
-			System.out.println(x);
+
+		System.out.print("Enter the employee id that will have salary increase: ");
+		int id = sc.nextInt();
+		Employee emp = list.stream().filter(x -> x.getId() == id).findFirst().orElse(null);
+		if (emp == null) {
+			System.out.println("This id does not exist!");
+		} else {
+			System.out.print("Enter the percentage: ");
+			double percentage = sc.nextDouble();
+			emp.increaseSalary(percentage);
 		}
-		System.out.println("------------------------");
-		System.out.println("Index of Bob: " + list.indexOf("Bob"));
-		System.out.println("Index of Marco: " + list.indexOf("Marco"));
-		System.out.println("------------------------");		
-		List<String> result = list.stream().filter(x -> x.charAt(0) == 'A').collect(Collectors.toList());
-		for(String x : result) {
-			System.out.println(x);
+
+		System.out.println();
+		System.out.println("List of employees:");
+		for (Employee obj : list) {
+			System.out.println(obj);
 		}
-		System.out.println("------------------------");		
-		String name1 = list.stream().filter(x -> x.charAt(0) == 'A').findFirst().orElse(null);
-		String name2 = list.stream().filter(x -> x.charAt(0) == 'J').findFirst().orElse(null);
-		System.out.println(name1);
-		System.out.println(name2);
-		
 	}
 }
