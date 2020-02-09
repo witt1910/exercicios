@@ -14,21 +14,21 @@ public class Program {
 		Scanner sc = new Scanner(System.in);
 		int n = sc.nextInt();
 
-		int[][] vect = new int[n][n];
+		int[][] mat = new int[n][n];
 
 		int negativeNumbers = 0;
-		for (int i = 0; i < vect.length; i++) {
-			for (int j = 0; j < vect.length; j++) {
-				vect[i][j] = sc.nextInt();
-				if (vect[i][j] < 0) {
+		for (int i = 0; i < mat.length; i++) {
+			for (int j = 0; j < mat.length; j++) {
+				mat[i][j] = sc.nextInt();
+				if (mat[i][j] < 0) {
 					negativeNumbers++;
 				}
 			}
 		}
 
 		System.out.println("Main diagonal:");
-		for (int i = 0; i < vect.length; i++) {
-			System.out.print(vect[i][i] + " ");
+		for (int i = 0; i < mat.length; i++) {
+			System.out.print(mat[i][i] + " ");
 		}
 
 		System.out.println();
