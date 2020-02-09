@@ -1,21 +1,44 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Program {
 	public static void main(String[] args) {
 
-		// 05.04 For each
+		// 05.05 List (criação e uso de alguns métodos)
 
-		String[] vect = new String[] { "Maria", "Bob", "Alex" };
-
-		for (int count = 0; count < vect.length; count++) {
-			System.out.println(vect[count]);
-		}
-
-		System.out.println();
+		List<String> list = new ArrayList<>();
 		
-		for (String obj : vect) {
-			System.out.println(obj);
+		list.add("Maria");
+		list.add("Alex");
+		list.add("Bob");
+		list.add("Ana");
+		list.add(2, "Marco");
+		
+		System.out.println("Size: " + list.size());
+		for(String x : list) {
+			System.out.println(x);
 		}
-
+		System.out.println("------------------------");
+		list.removeIf(x -> x.charAt(0) == 'M');
+		for(String x : list) {
+			System.out.println(x);
+		}
+		System.out.println("------------------------");
+		System.out.println("Index of Bob: " + list.indexOf("Bob"));
+		System.out.println("Index of Marco: " + list.indexOf("Marco"));
+		System.out.println("------------------------");		
+		List<String> result = list.stream().filter(x -> x.charAt(0) == 'A').collect(Collectors.toList());
+		for(String x : result) {
+			System.out.println(x);
+		}
+		System.out.println("------------------------");		
+		String name1 = list.stream().filter(x -> x.charAt(0) == 'A').findFirst().orElse(null);
+		String name2 = list.stream().filter(x -> x.charAt(0) == 'J').findFirst().orElse(null);
+		System.out.println(name1);
+		System.out.println(name2);
+		
 	}
 }
