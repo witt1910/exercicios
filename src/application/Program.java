@@ -1,73 +1,39 @@
 package application;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Scanner;
-
-import entities.Client;
-import entities.Order;
-import entities.OrderItem;
-import entities.Product;
-import entities.enums.OrderStatus;
+import entities.Account;
+import entities.BusinessAccount;
+import entities.SavingAccount;
 
 public class Program {
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) {
 
-		// 07.04 Composição e StringBuilder
+		// 08.01 Inheritance 02 - Herança, Upcasting e Downcasting
 
-		// Ler os dados de um pedido com N itens (N fornecido pelo usuário).
-		// Depois, mostrar um sumário do pedido conforme exemplo (próxima página).
-		// Nota: o instante do pedido deve ser o instante do sistema: new Date()
+		Account acc = new Account(1001, "Alex", 0.0);
+		BusinessAccount bacc = new BusinessAccount(1002, "Maria", 0.0, 500.0);
 
-		Locale.setDefault(Locale.US);
-		Scanner sc = new Scanner(System.in);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		
-		System.out.println("Enter client data:");
-		System.out.print("Name: ");
-		String name = sc.nextLine();
-		System.out.print("Email: ");
-		String email = sc.nextLine();
-		System.out.print("Birth date (DD/MM/YYYY): ");
-		Date birthDate = sdf.parse(sc.next());
-		
-		Client client = new Client(name, email, birthDate);
+		// UPCASTING
 
-		System.out.println();
-		System.out.println("Enter order data:");
-		System.out.print("Status: ");
-		OrderStatus status = OrderStatus.valueOf(sc.next());
-		
-		Order order = new Order(new Date(), status, client);
-		
-		System.out.print("How many items to this order? ");
-		int num = sc.nextInt();
-		
-		for(int i = 1; i <= num; i++) {
-			System.out.println("Enter #" + i + " item data: ");
-			System.out.print("Product name: ");
-			sc.nextLine();
-			String productName = sc.nextLine();
-			System.out.print("Product price: ");
-			double productPrice = sc.nextDouble();
-			
-			Product product = new Product(productName, productPrice);
-			
-			System.out.print("Quantity: ");
-			int quantity = sc.nextInt();
-			
-			OrderItem orderItem = new OrderItem(quantity, productPrice, product);
-			
-			order.addItem(orderItem);
+		Account acc1 = bacc;
+		Account acc2 = new BusinessAccount(1003, "Bob", 0.0, 200.0);
+		Account acc3 = new SavingAccount(1004, "Anna", 0.0, 0.01);
+
+		// DOWNCASTING
+
+		BusinessAccount acc4 = (BusinessAccount) acc2;
+		acc4.loan(100.0);
+
+		// BusinessAccount acc5 = (BusiiinessAccount)acc3;
+		if (acc3 instanceof BusinessAccount) {
+			BusinessAccount acc5 = (BusinessAccount) acc3;
+			acc5.loan(200.0);
+			System.out.println("Loan!");
 		}
-		
-		System.out.println();
-		System.out.println("ORDER SUMARY:");
-		System.out.println(order);
-		
-		
-		sc.close();
+
+		if (acc3 instanceof SavingAccount) {
+			SavingAccount acc5 = (SavingAccount) acc3;
+			acc5.updateBalance();
+			System.out.println("Update!");
+		}
 	}
 }
