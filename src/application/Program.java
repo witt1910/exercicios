@@ -1,76 +1,41 @@
 package application;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Scanner;
 
-import entities.ImportedProduct;
-import entities.Product;
-import entities.UsedProduct;
+import entities.Account;
+import entities.BusinessAccount;
+import entities.SavingsAccount;
 
 public class Program {
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) {
 
-		// 08.04 Inheritance 05 - Polimorfismo
+		// 08.05 Classes abstratas
 
-//		Fazer um programa para ler os dados de N
-//		produtos (N fornecido pelo usuário). Ao final,
-//		mostrar a etiqueta de preço de cada produto na
-//		mesma ordem em que foram digitados.
-//		Todo produto possui nome e preço. Produtos
-//		importados possuem uma taxa de alfândega, e
-//		produtos usados possuem data de fabricação.
-//		Estes dados específicos devem ser
-//		acrescentados na etiqueta de preço conforme
-//		exemplo (próxima página). Para produtos
-//		importados, a taxa e alfândega deve ser
-//		acrescentada ao preço final do produto.
-
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Locale.setDefault(Locale.US);
-		Scanner sc = new Scanner(System.in);
+		List<Account> list = new ArrayList<>();
 
-		List<Product> list = new ArrayList<>();
+		list.add(new SavingsAccount(1001, "Alex", 500.00, 0.01));
+		list.add(new BusinessAccount(1002, "Maria", 1000.00, 400.0));
+		list.add(new SavingsAccount(1004, "Bob", 300.00, 0.01));
+		list.add(new BusinessAccount(1005, "Anna", 500.00, 500.0));
 
-		System.out.print("Enter the number of product: ");
-		int quantity = sc.nextInt();
-
-		for (int count = 1; count <= quantity; count++) {
-			System.out.println("Product #" + count + " data:");
-			System.out.print("Common, used or imported (c/u/i)? ");
-			char op = sc.next().charAt(0);
-			System.out.print("Name: ");
-			sc.nextLine();
-			String name = sc.nextLine();
-			System.out.print("Price: ");
-			double price = sc.nextDouble();
-			if (op == 'i') {
-				System.out.print("Customs fee: ");
-				double customFee = sc.nextDouble();
-				Product product = new ImportedProduct(name, price, customFee);
-				list.add(product);
-			}
-			if (op == 'u') {
-				System.out.print("Manufacture date (DD/MM/YYYY): ");
-				Date manufactureDate = sdf.parse(sc.next());
-				Product product = new UsedProduct(name, price, manufactureDate);
-				list.add(product);
-			}
-			if (op == 'c') {
-				Product product = new Product(name, price);
-				list.add(product);
-			}
+		// Somar os saldos de contas de diferentes subtipos,
+		// pelo tipo principal comum.
+		double sum = 0.0;
+		for (Account acc : list) {
+			sum += acc.getBalance();
 		}
 
-		System.out.println();
-		System.out.println("PRICE TAGS:");
-		for (Product p : list) {
-			System.out.println(p.priceTag());
+		// Depositar em qualquer conta, de qualquer tipo,
+		// a mesma quantia.
+		for (Account acc : list) {
+			acc.deposit(10.0);
 		}
 
+		for (Account acc : list) {
+			System.out.printf("Updated balance for account %d: %.2f%n", acc.getNumber(), acc.getBalance());
+		}
 	}
 }
