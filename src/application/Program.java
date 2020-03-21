@@ -1,67 +1,75 @@
 package application;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
-import entities.Employee;
-import entities.OutsourcedEmployee;
+import entities.ImportedProduct;
+import entities.Product;
+import entities.UsedProduct;
 
 public class Program {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 
-		// 08.03 Inheritance 04 - "Final" e Polimorfismo 
+		// 08.04 Inheritance 05 - Polimorfismo
 
-		// Uma empresa possui funcionarios próprios e terceirizados.
-		// Para cada funcionário, deseja-se registrar nome, horas
-		// trabalhadas e valor por hora. Funcionarios terceirizado
-		// possuem ainda uma despesa adicional.
-		// O pagamento dos funcionarios corresponde ao valor da hora
-		// multiplicado pelas horas trabalhadas, sendo que os
-		// funcionários terceirizados ainda recebem um bônus
-		// correspondente a 110% de sua despesa adicional.
-		// Fazer um programa para ler os dados de N funcionários (N
-		// fornecido pelo usuário) e armazená-los em uma lista. Depois
-		// de ler todos os dados, mostrar nome e pagamento de cada
-		// funcionário na mesma ordem em que foram digitados.
-		// Construa o programa conforme projeto ao lado. Veja
-		// exemplo na próxima página.
+//		Fazer um programa para ler os dados de N
+//		produtos (N fornecido pelo usuário). Ao final,
+//		mostrar a etiqueta de preço de cada produto na
+//		mesma ordem em que foram digitados.
+//		Todo produto possui nome e preço. Produtos
+//		importados possuem uma taxa de alfândega, e
+//		produtos usados possuem data de fabricação.
+//		Estes dados específicos devem ser
+//		acrescentados na etiqueta de preço conforme
+//		exemplo (próxima página). Para produtos
+//		importados, a taxa e alfândega deve ser
+//		acrescentada ao preço final do produto.
 
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 
-		List<Employee> emp = new ArrayList<>();
+		List<Product> list = new ArrayList<>();
 
-		System.out.print("Enter the number of employees: ");
-		int numberEmployees = sc.nextInt();
+		System.out.print("Enter the number of product: ");
+		int quantity = sc.nextInt();
 
-		for (int i = 1; i <= numberEmployees; i++) {
-			System.out.println("Employee #" + i + " data:");
-			System.out.print("Outsourced (y/n)? ");
-			char outsourced = sc.next().charAt(0);
+		for (int count = 1; count <= quantity; count++) {
+			System.out.println("Product #" + count + " data:");
+			System.out.print("Common, used or imported (c/u/i)? ");
+			char op = sc.next().charAt(0);
 			System.out.print("Name: ");
 			sc.nextLine();
 			String name = sc.nextLine();
-			System.out.print("Hours: ");
-			int hours = sc.nextInt();
-			System.out.print("Value per hour: ");
-			double valuePerHour = sc.nextDouble();
-			if (outsourced == 'y') {
-				System.out.print("Additional charge: ");
-				double additionalCharge = sc.nextDouble();
-				Employee employee = new OutsourcedEmployee(name, hours, valuePerHour, additionalCharge);
-				emp.add(employee);
-			} else {
-				Employee employee = new Employee(name, hours, valuePerHour);
-				emp.add(employee);
+			System.out.print("Price: ");
+			double price = sc.nextDouble();
+			if (op == 'i') {
+				System.out.print("Customs fee: ");
+				double customFee = sc.nextDouble();
+				Product product = new ImportedProduct(name, price, customFee);
+				list.add(product);
+			}
+			if (op == 'u') {
+				System.out.print("Manufacture date (DD/MM/YYYY): ");
+				Date manufactureDate = sdf.parse(sc.next());
+				Product product = new UsedProduct(name, price, manufactureDate);
+				list.add(product);
+			}
+			if (op == 'c') {
+				Product product = new Product(name, price);
+				list.add(product);
 			}
 		}
 
 		System.out.println();
-		System.out.println("PAYMENTS:");
-		for (Employee e : emp) {
-			System.out.println(e.getName() + " - $ " + String.format("%.2f", e.payment()));
+		System.out.println("PRICE TAGS:");
+		for (Product p : list) {
+			System.out.println(p.priceTag());
 		}
 
 	}
