@@ -4,10 +4,8 @@ import entities.enums.Color;
 
 public class Circle extends Shape {
 
-	final static double PI = 3.14159265359;
-	
 	private Double radius;
-	
+
 	public Circle() {
 		super();
 	}
@@ -24,9 +22,9 @@ public class Circle extends Shape {
 	public void setRadius(Double radius) {
 		this.radius = radius;
 	}
-	
+
 	@Override
 	public Double area() {
-		return PI * (radius * radius);
+		return Math.PI * radius * radius;
 	}
 }
