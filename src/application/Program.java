@@ -1,26 +1,37 @@
 package application;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.File;
+import java.util.Scanner;
 
 public class Program {
 	public static void main(String[] args) {
 
-		// 11.04 FileWriter e BufferedWriter
+		// 11.05 Manipular pastas com File	\
 
-		String[] lines = new String[] { "Good morning", "Good afternoon", "Good night" };
-
-		String path = "C:\\temp\\out.txt";
-
-		try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
-
-			for (String line : lines) {
-				bw.write(line);
-				bw.newLine();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.print("Enter a folder path: ");
+		String strPath = sc.nextLine();
+		
+		File path = new File(strPath);
+		
+		// Listar somente pastas
+		File[] folders = path.listFiles(File::isDirectory);
+		System.out.println("FOLDERS:");
+		for(File folder : folders) {
+			System.out.println(folder);
 		}
+		
+		// Listar somente arquivos
+		File[] files = path.listFiles(File::isFile);
+		System.out.println("FILES:");
+		for(File file : files) {
+			System.out.println(file);
+		}
+		
+		// Criar pasta (e confirmar a sua criação)
+		boolean success = new File(strPath + "\\subdir").mkdir();
+		System.out.println("Directory created successfully: " + success);
+		sc.close();
 	}
 }
