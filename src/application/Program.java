@@ -14,7 +14,7 @@ import model.services.RentalServices;
 public class Program {
 	public static void main(String[] args) throws ParseException {
 
-		// 13.02 Interfaces - Exercicio 01 com solução com  Interface
+		// 13.03 Interfaces - Inversão de controle, Injeção de dependências (por meio de construtor)
 
 //		Uma locadora brasileira de carros cobra um valor por hora para locações de até
 //		12 horas. Porém, se a duração da locação ultrapassar 12 horas, a locação será
@@ -46,6 +46,12 @@ public class Program {
 		System.out.print("Enter price per day: ");
 		double pricePerDay = sc.nextDouble();
 		
+		// INVERSÃO DE CONTROLE - a classe principal trata a especificidade, enquanto a classe
+		// 		RentalService apenas aplica a abstração 'TaxService'.
+		//		Com isso se retira da classe a  responsabilidade de instaciar suas dependências.
+		// INJEÇÃO DE DEPENDÊNCIA - é no construtor da classe no main que ocorre a instanciação
+		// 		específica do 'BrazilTaxService', e a classe RentalService só casa com a sua generalidade.
+		//		Um componente externo instancia a dependência, que então é injetada no objeto 'pai'.
 		RentalServices rentalService = new RentalServices(pricePerHour, pricePerDay, new BrazilTaxService());
 
 		rentalService.processInvoice(cr);
