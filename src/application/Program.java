@@ -1,22 +1,20 @@
 package application;
 
-import model.entities.Circle;
-import model.entities.Rectangle;
-import model.entities.AbstractShape;
-import model.enums.Color;
+import model.entities.Printer;
+import model.entities.Scanner;
 
 public class Program {
 	public static void main(String[] args) {
 
-		// 13.06 Interfaces- Exercício 02 (com interface e classe abstrata)
+		// 13.07 Interfaces - Exercício 03 (implmenetação inicial - sem interfaces)
 
-		AbstractShape s1 = new Circle(Color.BLACK, 2.0);
-		AbstractShape s2 = new Rectangle(Color.WHITE, 3.0, 4.0);
-
-		System.out.println("Circle color: " + s1.getColor());
-		System.out.println("Circle area: " + String.format("%.3f", s1.area()));
-		System.out.println("Rectangle color: " + s2.getColor());
-		System.out.println("Rectangle area: " + String.format("%.3f", s2.area()));
-
+		Printer p = new Printer("1080");
+		p.processDoc("My Letter");
+		p.print("My Letter");
+		
+		System.out.println();
+		Scanner s = new Scanner("2003");
+		s.processDoc("My Email");
+		System.out.println("Scan result: " + s.scan());
 	}
 }
