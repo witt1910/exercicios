@@ -1,43 +1,35 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Locale;
+import java.util.Scanner;
 
-import model.entities.Employee;
+import model.services.InterestService;
+import model.services.UsaInterestService;
 
 public class Program {
 	public static void main(String[] args) {
 
-		// 13.10 Interfaces/Comparable - Exercício 04 - comparação entre objetos (com Comparable)
+		// 13.11 Interfaces - Default methods
 
-		List<Employee> list = new ArrayList<>();
-		String path = "C:\\temp\\in.txt";
+//		Fazer um programa para ler uma quantia e a duração em meses de um
+//		empréstimo. Informar o valor a ser pago depois de decorrido o prazo do
+//		empréstimo, conforme regras de juros do Brasil. A regra de cálculo de
+//		juros do Brasil é juro composto padrão de 2% ao mês.
+//		Depois, inserir o mesmo, com um exemplo norteamericano, considerando
+//		juro de 1% ao mês.
 
-		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+		Locale.setDefault(Locale.US);
+		Scanner sc = new Scanner(System.in);
 
-			String employeeCsv = br.readLine();
-			while (employeeCsv != null) {
-				String[] fields = employeeCsv.split(",");
-				String name = fields[0];
-				double salary = Double.parseDouble(fields[1]);
-				Employee employee = new Employee(name, salary);
-				list.add(employee);
-				employeeCsv = br.readLine();
-			}
-			
-			Collections.sort(list);
-			
-			for(Employee emp : list) {
-				System.out.println(emp.getName() + ", " + emp.getSalary());
-			}
+		System.out.print("Amount: ");
+		double amount = sc.nextDouble();
+		System.out.print("Months: ");
+		int months = sc.nextInt();
 
-		} catch (IOException e) {
-			System.out.println("Error: " + e.getMessage());
-		}
+		InterestService is = new UsaInterestService(1.0);
+		double payment = is.payment(amount, months);
 
+		System.out.println("Payment afeter: " + months + " months:");
+		System.out.println(String.format("%.2f", payment));
 	}
 }
