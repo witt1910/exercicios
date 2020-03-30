@@ -1,18 +1,6 @@
 package model.entities;
 
-public class Printer extends Device {
+public interface Printer {
 
-	public Printer(String serialNumber) {
-		super(serialNumber);
-	}
-
-	@Override
-	public void processDoc(String doc) {
-		System.out.println("Printer processiing: " + doc);
-	}
-
-	public void print(String doc) {
-		System.out.println("printing: " + doc);
-	}
-
+	void print(String doc);
 }
