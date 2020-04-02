@@ -1,57 +1,46 @@
 package application;
 
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class Program {
 	public static void main(String[] args) {
 
-		// 14.14 Set - Exercício 02 - HashSet e addAll()
+		// 14.15 - Map (e principais métodos)
 
-//		Em um portal de cursos online, cada usuário possui um código único, 
-//		representado por um número inteiro.
-//		Cada instrutor do portal pode ter vários cursos, sendo que um mesmo aluno pode se
-//		matricular em quantos cursos quiser. Assim, o número total de alunos de um instrutor não
-//		é simplesmente a soma dos alunos de todos os cursos que ele possui, pois pode haver
-//		alunos repetidos em mais de um curso.
-//		O instrutor Alex possui três cursos A, B e C, e deseja saber seu número total de alunos.
-//		Seu programa deve ler os alunos dos cursos A, B e C do instrutor Alex, depois mostrar a
-//		quantidade total e alunos dele, conforme exemplo.
+		// Cria conjunto com chaves e valores, tipo TreeMap (ordenado)
+		Map<String, String> cookies = new TreeMap<>();
 
-		Scanner sc = new Scanner(System.in);
+		// O método PUT insere chaves e valores
+		cookies.put("username", "maria");
+		cookies.put("email", "maria@gmail.com");
+		cookies.put("phone", "99771122");
 
-		Set<Integer> a = new HashSet<>();
-		Set<Integer> b = new HashSet<>();
-		Set<Integer> c = new HashSet<>();
+		// O método REMOVE retira do conjunto
+		cookies.remove("email");
+
+		// Novos valores nas mesmas chaves os sobrepõem
+		cookies.put("phone", "99771133");
+
+		// Verifica se uma dada chave existe no conjunto (true/false)
+		System.out.println("Contains 'phone' key: " + cookies.containsKey("phone"));
+
+		// Verifica o valor de determinada chave
+		System.out.println("Phone number: " + cookies.get("phone"));
 		
-		System.out.print("How many students for course A? ");
-		int n = sc.nextInt();
-		for (int i=0; i<n; i++) {
-			int number = sc.nextInt();
-			a.add(number);
+		// Se a chave buscada não existir, retorna 'null'
+		System.out.println("Email: " + cookies.get("email"));
+
+		// Verifica o tamanho do conjunto (cada par chave-valor conta como um)
+		System.out.println("Size: " + cookies.size());
+
+		System.out.println();
+
+		// Meio de imprimir chaves e valores
+		System.out.println("ALL COOKIES:");
+		for (String key : cookies.keySet()) {
+			System.out.println(key + ": " + cookies.get(key));
 		}
 
-		System.out.print("How many students for course B? ");
-		n = sc.nextInt();
-		for (int i=0; i<n; i++) {
-			int number = sc.nextInt();
-			b.add(number);
-		}
-
-		System.out.print("How many students for course C? ");
-		n = sc.nextInt();
-		for (int i=0; i<n; i++) {
-			int number = sc.nextInt();
-			c.add(number);
-		}
-		
-		Set<Integer> total = new HashSet<>(a);
-		total.addAll(b);
-		total.addAll(c);
-
-		System.out.println("Total students: " + total.size());
-
-		sc.close();
 	}
 }
