@@ -1,46 +1,33 @@
 package application;
 
+import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
+
+import model.entities.Product;
 
 public class Program {
 	public static void main(String[] args) {
 
-		// 14.15 - Map (e principais métodos)
+		// 14.16 - Map - com objetos - comapra-se ou por ponteiro 
+		// ou pore hashCode e equals
 
-		// Cria conjunto com chaves e valores, tipo TreeMap (ordenado)
-		Map<String, String> cookies = new TreeMap<>();
+		// Pode-se usar objetos criados como chaves
+		Map<Product, Double> stock = new HashMap<>();
 
-		// O método PUT insere chaves e valores
-		cookies.put("username", "maria");
-		cookies.put("email", "maria@gmail.com");
-		cookies.put("phone", "99771122");
+		// Criando-se objetos
+		Product p1 = new Product("Tv", 900.0);
+		Product p2 = new Product("Notebook", 1200.0);
+		Product p3 = new Product("Tablet", 400.0);
 
-		// O método REMOVE retira do conjunto
-		cookies.remove("email");
+		// Acrecendo-se os objetos
+		stock.put(p1, 10000.0);
+		stock.put(p2, 20000.0);
+		stock.put(p3, 15000.0);
 
-		// Novos valores nas mesmas chaves os sobrepõem
-		cookies.put("phone", "99771133");
+		// Criando novo objto, igual ao p1, mas com outra referência/ponteiro
+		Product ps = new Product("Tv", 900.0);
 
-		// Verifica se uma dada chave existe no conjunto (true/false)
-		System.out.println("Contains 'phone' key: " + cookies.containsKey("phone"));
-
-		// Verifica o valor de determinada chave
-		System.out.println("Phone number: " + cookies.get("phone"));
-		
-		// Se a chave buscada não existir, retorna 'null'
-		System.out.println("Email: " + cookies.get("email"));
-
-		// Verifica o tamanho do conjunto (cada par chave-valor conta como um)
-		System.out.println("Size: " + cookies.size());
-
-		System.out.println();
-
-		// Meio de imprimir chaves e valores
-		System.out.println("ALL COOKIES:");
-		for (String key : cookies.keySet()) {
-			System.out.println(key + ": " + cookies.get(key));
-		}
-
+		// sem hashCode e equals, compara-se por ponteiros - e daria 'false'
+		System.out.println("Contains 'ps' key: " + stock.containsKey(ps));
 	}
 }
