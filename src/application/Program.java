@@ -9,7 +9,7 @@ public class Program {
 	public static void main(String[] args) {
 
 		// 14.16 - Map - com objetos - comapra-se ou por ponteiro 
-		// ou pore hashCode e equals
+		// ou por hashCode e equals
 
 		// Pode-se usar objetos criados como chaves
 		Map<Product, Double> stock = new HashMap<>();
