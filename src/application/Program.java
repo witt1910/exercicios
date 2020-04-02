@@ -1,43 +1,44 @@
 package application;
 
-import model.entities.Client;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Program {
 	public static void main(String[] args) {
 
-		// 14.07 Generics - hashCode e equals 
-		
-		String a = "Maria";
-		String b = "Alex";
-		String c = "Maria";
-		
-		// hashCode cria um número e compara ele
-		// 100% quando não for igual, já quase certamente quando for igual
-		System.out.println("hashCode a: " + a.hashCode());
-		System.out.println("hashCode b: " + b.hashCode());
-		
-		// compara especificamente - Mais demorado mas 100% acerto
-		System.out.println("a = b: " + a.equals(b));
-		
-		// tratamento especial
-		// mas se for criado com: String a = new String("Maria", "maria@gmail.com";
-		// não dará "true", pois cai na questão seguinte
-		System.out.println("a == c: " + (a == c));
-		
-		System.out.println();
-		
-		Client c1 = new Client("Maria", "maria@gmail.com");
-		Client c2 = new Client("Bob", "bob@gmail.com");
-		Client c3 = new Client("Maria", "maria@gmail.com");
-		
-		System.out.println("hashCode c1: " + c1.hashCode());
-		System.out.println("hashCode c2: " + c2.hashCode());
-		System.out.println("hashCode c3: " + c3.hashCode());
-		
-		System.out.println("c1 = c2: " + c1.equals(c2));
-		System.out.println("c1 = c3: " + c1.equals(c3));
-		
-		// compara o endereço na memória
-		System.out.println("c1 == c3: " + (c1 == c3));
+		// 14.08 Set
+		// Conjunto que não admite repetições, elementos não possuem posição
+		// Acesso, isnerção e remoção rápidos
+		// Principais implementações:
+		// 		HashSet: rápido (O(1) em tabela hash), não ordenado;
+		// 		LinkedHashSet: vel. média, repeita ordem do add;
+		//		TreeSet: lento (O(log(n))), ordena pelo compareTo (do Comparable)
+		// 		ou Comparator
+
+		Set<String> set = new HashSet<>();
+
+		// add elementos
+		set.add("TV");
+		set.add("Notebook");
+		set.add("Tablet");
+		set.add("Fry");
+		set.add("Table");
+		set.add("Lamp");
+
+		// remove elementos
+		set.remove("TV");
+
+		// remove se tal condição for atnedida
+		set.removeIf(x -> x.charAt(0) == 'T');
+
+		// indica se o conjunto contem ou nao tal elemento
+		System.out.println(set.contains("Notebook"));
+
+		// indica tamanho do conjunto
+		System.out.println("Size: " + set.size());
+
+		for (String p : set) {
+			System.out.println(p);
+		}
 	}
 }
