@@ -14,7 +14,7 @@ import model.entities.LogEntry;
 public class Program {
 	public static void main(String[] args) {
 
-		// 14.12 Set - Exercício 01 - HashSet
+		// 14.13 Set - Exercício 01 - HashSet (sem Comparable)
 
 //		Um site de internet registra um log de acessos dos usuários. Um
 //		registro de log consiste no nome de usuário (apenas uma palavra) e o

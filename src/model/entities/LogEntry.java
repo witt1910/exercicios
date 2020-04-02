@@ -2,7 +2,7 @@ package model.entities;
 
 import java.util.Date;
 
-public class LogEntry implements Comparable<LogEntry> {
+public class LogEntry  {
 
 	private String username;
 	private Date moment;
@@ -51,11 +51,6 @@ public class LogEntry implements Comparable<LogEntry> {
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
-	}
-
-	@Override
-	public int compareTo(LogEntry other) {
-		return username.compareTo(other.getUsername());
 	}
 
 }
