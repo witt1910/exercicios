@@ -1,61 +1,56 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.time.Instant;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-import model.entities.LogEntry;
-
 public class Program {
 	public static void main(String[] args) {
 
-		// 14.13 Set - Exercício 01 - HashSet (sem Comparable)
+		// 14.14 Set - Exercício 02 - HashSet e addAll()
 
-//		Um site de internet registra um log de acessos dos usuários. Um
-//		registro de log consiste no nome de usuário (apenas uma palavra) e o
-//		instante em que o usuário acessou o site no padrão ISO 8601,
-//		separados por espaço, conforme exemplo. Fazer um programa que leia
-//		o log de acessos a partir de um arquivo, e daí informe quantos usuários
-//		distintos acessaram o site.
-
-//		input file:
-//		amanda 2018-08-26T20:45:08Z
-//		alex86 2018-08-26T21:49:37Z
-//		bobbrown 2018-08-27T03:19:13Z
-//		amanda 2018-08-27T08:11:00Z
-//		jeniffer3 2018-08-27T09:19:24Z
-//		alex86 2018-08-27T22:39:52Z
-//		amanda 2018-08-28T07:42:19Z
+//		Em um portal de cursos online, cada usuário possui um código único, 
+//		representado por um número inteiro.
+//		Cada instrutor do portal pode ter vários cursos, sendo que um mesmo aluno pode se
+//		matricular em quantos cursos quiser. Assim, o número total de alunos de um instrutor não
+//		é simplesmente a soma dos alunos de todos os cursos que ele possui, pois pode haver
+//		alunos repetidos em mais de um curso.
+//		O instrutor Alex possui três cursos A, B e C, e deseja saber seu número total de alunos.
+//		Seu programa deve ler os alunos dos cursos A, B e C do instrutor Alex, depois mostrar a
+//		quantidade total e alunos dele, conforme exemplo.
 
 		Scanner sc = new Scanner(System.in);
 
-		Set<LogEntry> set = new HashSet<>();
-
-		System.out.print("Enter file full path: ");
-		String path = sc.nextLine();
-
-		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-
-			String line = br.readLine();
-			while (line != null) {
-				String[] fields = line.split(" ");
-				String username = fields[0];
-				Date moment = Date.from(Instant.parse(fields[1]));
-				set.add(new LogEntry(username, moment));
-
-				line = br.readLine();
-			}
-
-			System.out.println("Total users: " + set.size());
-
-		} catch (IOException e) {
-			System.out.println("Error: " + e.getMessage());
+		Set<Integer> a = new HashSet<>();
+		Set<Integer> b = new HashSet<>();
+		Set<Integer> c = new HashSet<>();
+		
+		System.out.print("How many students for course A? ");
+		int n = sc.nextInt();
+		for (int i=0; i<n; i++) {
+			int number = sc.nextInt();
+			a.add(number);
 		}
+
+		System.out.print("How many students for course B? ");
+		n = sc.nextInt();
+		for (int i=0; i<n; i++) {
+			int number = sc.nextInt();
+			b.add(number);
+		}
+
+		System.out.print("How many students for course C? ");
+		n = sc.nextInt();
+		for (int i=0; i<n; i++) {
+			int number = sc.nextInt();
+			c.add(number);
+		}
+		
+		Set<Integer> total = new HashSet<>(a);
+		total.addAll(b);
+		total.addAll(c);
+
+		System.out.println("Total students: " + total.size());
 
 		sc.close();
 	}
