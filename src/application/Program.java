@@ -9,7 +9,7 @@ import model.entities.Product;
 public class Program {
 	public static void main(String[] args) {
 
-		// 15.04 - Comparator (objeto de expressão lambda sem chaves)
+		// 15.05 - Comparator (expressão lambda "direto no argumento")
 
 		List<Product> list = new ArrayList<>();
 
@@ -17,9 +17,7 @@ public class Program {
 		list.add(new Product("Notebook", 1200.00));
 		list.add(new Product("Tablet", 450.00));
 
-		Comparator<Product> comp = (p1, p2) -> p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase());
-		
-		list.sort(comp);
+		list.sort((p1, p2) -> p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase()));
 
 		for (Product p : list) {
 			System.out.println(p);
