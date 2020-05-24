@@ -1,26 +1,60 @@
 package application;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-
-import model.entities.Product;
+import java.text.ParseException;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class Program {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ParseException {
 
-		// 15.05 - Comparator (expressão lambda "direto no argumento")
+		// 14.14b Set - Exercício 02 - HashSet e addAll()
 
-		List<Product> list = new ArrayList<>();
+//		Em um portal de cursos online, cada usuário possui um código único, 
+//		representado por um número inteiro.
+//		Cada instrutor do portal pode ter vários cursos, sendo que um mesmo aluno pode se
+//		matricular em quantos cursos quiser. Assim, o número total de alunos de um instrutor não
+//		é simplesmente a soma dos alunos de todos os cursos que ele possui, pois pode haver
+//		alunos repetidos em mais de um curso.
+//		O instrutor Alex possui três cursos A, B e C, e deseja saber seu número total de alunos.
+//		Seu programa deve ler os alunos dos cursos A, B e C do instrutor Alex, depois mostrar a
+//		quantidade total e alunos dele, conforme exemplo.
 
-		list.add(new Product("TV", 900.00));
-		list.add(new Product("Notebook", 1200.00));
-		list.add(new Product("Tablet", 450.00));
+		
+		Scanner sc = new Scanner(System.in);
 
-		list.sort((p1, p2) -> p1.getName().toUpperCase().compareTo(p2.getName().toUpperCase()));
+		Set<Integer> courseA = new HashSet<>();
+		Set<Integer> courseB = new HashSet<>();
+		Set<Integer> courseC = new HashSet<>();
+		Set<Integer> totalStudents = new HashSet<>();
 
-		for (Product p : list) {
-			System.out.println(p);
+		System.out.print("How many students for course A? ");
+		int std = sc.nextInt();
+		addGrade(courseA, std);
+
+		System.out.print("How many students for course B? ");
+		std = sc.nextInt();
+		addGrade(courseB, std);
+
+		System.out.print("How many students for course C? ");
+		std = sc.nextInt();
+		addGrade(courseC, std);
+
+		totalStudents.addAll(courseA);
+		totalStudents.addAll(courseB);
+		totalStudents.addAll(courseC);
+
+		System.out.println("Total students: " + totalStudents.size());
+
+		sc.close();
+	}
+
+	public static void addGrade(Set<Integer> list, int std) {
+		Scanner sc = new Scanner(System.in);
+		for (int i = 0; i < std; i++) {
+			int grade = sc.nextInt();
+			list.add(grade);
 		}
+		sc.close();
 	}
 }
