@@ -2,24 +2,35 @@ package application;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Program {
 	public static void main(String[] args) {
 
-		// 15.10 - Stream - demonstração de criação de streams
-
+		// 15.11 - Stream - demonstração de pipeline.
+		
+		// Cria lista já com valores inseridos.
 		List<Integer> list = Arrays.asList(3, 4, 5, 10, 7);
-		Stream<Integer> st1 = list.stream();
+		
+		// Cria stream de inteiros e aplica a cada elemento da stream
+		// a multiplicação de seu valor por 10. Depois imprime. 
+		Stream<Integer> st1 = list.stream().map(x -> x * 10);
 		System.out.println(Arrays.toString(st1.toArray()));
 		
-		Stream<String> st2 = Stream.of("Maria", "Alex", "Bob");
-		System.out.println(Arrays.toString(st2.toArray()));
+		// Realiza a soma dos elementos da liste, após converter para 
+		// stream, e então imprime a soma.
+		int sum = list.stream().reduce(0,  (x, y) -> x + y);
+		System.out.println("Sum = " + sum);
 		
-		Stream<Integer> st3 = Stream.iterate(0, x -> x + 2);
-		System.out.println(Arrays.toString(st3.limit(10).toArray()));
-		
-		Stream<Long> st4 = Stream.iterate(new long[]{ 0L, 1L }, p->new long[]{ p[1], p[0]+p[1] }).map(p -> p[0]);
-		System.out.println(Arrays.toString(st4.limit(10).toArray()));
+		// Transforma de list para stream, depois filtra os pares,
+		// multiplica os elementos restantes por 10. Converte para
+		// list novamente e imprime.
+		List<Integer> newList = list.stream()
+				.filter(x -> x % 2 == 0)
+				.map(x -> x * 10)
+				.collect(Collectors.toList());
+		System.out.println(Arrays.toString(newList.toArray()));
+
 	}
 }
