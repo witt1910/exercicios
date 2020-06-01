@@ -4,83 +4,83 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import model.entities.Product;
+import model.entities.Employee;
 
 public class Program {
 	public static void main(String[] args) {
 
-		// 15.12 - Stream - exercício resolvido (filter, sorted, map, reduce).
+		// 15.13 - Stream - exercício de fixação.
 
-//		Fazer um programa para ler um conjunto de produtos a partir de um
-//		arquivo em formato .csv (suponha que exista pelo menos um produto).
-//		Em seguida mostrar o preço médio dos produtos. Depois, mostrar os
-//		nomes, em ordem decrescente, dos produtos que possuem preço
-//		inferior ao preço médio.
-		
-//		Input files:
-//		Tv,900.00
-//		Mouse,50.00
-//		Tablet,350.50
-//		HD Case,80.90
-//		Computer,850.00
-//		Monitor,290.00
-		
+//		Fazer um programa para ler os dados (nome, email e salário)
+//		de funcionários a partir de um arquivo em formato .csv.
+//		Em seguida mostrar, em ordem alfabética, o email dos
+//		funcionários cujo salário seja superior a um dado valor
+//		fornecido pelo usuário.
+//		Mostrar também a soma dos salários dos funcionários cujo
+//		nome começa com a letra 'M'.
+
+//		Input file:
+//		Maria,maria@gmail.com,3200.00
+//		Alex,alex@gmail.com,1900.00
+//		Marco,marco@gmail.com,1700.00
+//		Bob,bob@gmail.com,3500.00
+//		Anna,anna@gmail.com,2800.00
+
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
-		
+
 		System.out.print("Enter full file path: ");
-		// "c:\\temp\\in.txt";
 		String path = sc.nextLine();
-				
-		// A partir dos dados do txt, ele cria os produtos.
-		try(BufferedReader br = new BufferedReader(new FileReader(path))) {
-		
-			List<Product> list = new ArrayList<>();
-			
+
+		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+
+			// Cria lista de Employee
+			List<Employee> list = new ArrayList<>();
+
 			String line = br.readLine();
 			while (line != null) {
+				// Converte os elementos do arquivo em formato csv para Employee
 				String[] fields = line.split(",");
-				list.add(new Product(fields[0], Double.parseDouble(fields[1])));
+				list.add(new Employee(fields[0], fields[1], Double.parseDouble(fields[2])));
 				line = br.readLine();
 			}
-			
-			// Transforma a lista em stream de Produtos, então em stream
-			// de preços. Realiza a soma dos elementos e divide pelo
-			// total de elementos na list, inserindo na variável avg.
-			double avg = list.stream()
-					.map(p -> p.getPrice())
-					.reduce(0.0, (x,y) -> x + y) / list.size();
-			
-			System.out.println("Average price: " + String.format("%.2f",  avg));
-			
-			// Função anônima - arrow function - interface
-			Comparator<String> comp = (s1, s2) -> s1.toUpperCase().compareTo(s2.toUpperCase());
 
-			// A partir da list de Produtos se cria uma stream deles.
-			// Depois se filtram os elementos com preço inferior à variável
-			// avg. Então se percorrem os elementos restantes e eles são
-			// ordenados, comparando-os usando a interface instanciada comp,
-			// invertendo a ordem com "reversed". Por fim, transformadas em 
-			// list novamente.
-			List<String> names = list.stream()
-					.filter(p -> p.getPrice() < avg)
-					.map(p -> p.getName()).sorted(comp.reversed())
+			System.out.print("Enter salary: ");
+			double salary = sc.nextDouble();
+
+			// Cria lista de emails a partir da lista de Employees.
+			// Primeiro converte list em stream. Depois filtra os elementos
+			// que possuem saário superior ao valor pedido anteriormente.
+			// Então pegam-se todos os emails desses Employees, ordena-os
+			// crescentemente e os devolve como list.
+			List<String> emails = list.stream()
+					.filter(p -> p.getSalary() > salary)
+					.map(p -> p.getEmail())
+					.sorted()
 					.collect(Collectors.toList());
-			
-			// Para cada elemento de "names", chama-se o método println
-			// da classe System.out.
-			names.forEach(System.out::println);
-			
-			
+
+			System.out.println("Email of people whose salary is more than 2000.00:");
+			emails.forEach(System.out::println);
+
+			// A partir do list, recupera-se ao fim um valor double de soma.
+			// Converte-se o list em stream, filtram-se os elementos com inicial
+			// 'M', então pega-se apenas o salary de cada um desses elementos,
+			//e somam-se um a um, produzindo a soma total de salários.
+			double sumSalary = list.stream()
+					.filter(p -> p.getName().charAt(0) == 'M')
+					.map(p -> p.getSalary())
+					.reduce(0.0, (x, y) -> x + y);
+
+			System.out.println("Sum of salary of people whose name starts with 'M': " + String.format("%.2f", sumSalary));
 		} catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
-	sc.close();
+		sc.close();
+
 	}
 }
